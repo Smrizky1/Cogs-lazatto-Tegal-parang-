@@ -1,46 +1,92 @@
-<!DOCTYPE html>
-<html lang="id">
+<!DOCTYPE html><html lang="id">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Form Penjualan</title>
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Aplikasi Tugas Kerja</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
-<body class="container mt-5">
-  <h1 class="mb-4">Form Input Penjualan</h1>
-  <form id="salesForm">
-    <div class="mb-3">
-      <label for="barang" class="form-label">Nama Barang</label>
-      <input type="text" class="form-control" id="barang" required>
-    </div>
-    <div class="mb-3">
-      <label for="jumlah" class="form-label">Jumlah Terjual</label>
-      <input type="number" class="form-control" id="jumlah" required>
-    </div>
-    <button type="submit" class="btn btn-primary">Kirim</button>
-  </form>
+<body class="bg-light">
+  <div class="container py-5">
+    <h2 class="text-center mb-4">Aplikasi Tugas Kerja</h2>
+    <form id="tugasForm" class="card p-4 shadow-sm">
+      <div class="mb-3">
+        <label for="tanggal" class="form-label">Tanggal</label>
+        <input type="date" class="form-control" id="tanggal" required>
+      </div>
+      <div class="mb-3">
+        <label for="karyawan" class="form-label">Nama Karyawan</label>
+        <input type="text" class="form-control" id="karyawan" required>
+      </div>
+      <div class="mb-3">
+        <label for="tugas" class="form-label">Nama Tugas</label>
+        <input type="text" class="form-control" id="tugas" required>
+      </div>
+      <div class="mb-3">
+        <label for="deskripsi" class="form-label">Deskripsi Tugas</label>
+        <textarea class="form-control" id="deskripsi" rows="3"></textarea>
+      </div>
+      <div class="mb-3">
+        <label for="status" class="form-label">Status</label>
+        <select class="form-select" id="status" required>
+          <option value="">Pilih Status</option>
+          <option value="Selesai">Selesai</option>
+          <option value="Proses">Proses</option>
+          <option value="Tertunda">Tertunda</option>
+        </select>
+      </div>
+      <div class="mb-3">
+        <label for="mulai" class="form-label">Waktu Mulai</label>
+        <input type="time" class="form-control" id="mulai">
+      </div>
+      <div class="mb-3">
+        <label for="selesai" class="form-label">Waktu Selesai</label>
+        <input type="time" class="form-control" id="selesai">
+      </div>
+      <div class="mb-3">
+        <label for="catatan" class="form-label">Catatan</label>
+        <input type="text" class="form-control" id="catatan">
+      </div>
+      <button type="submit" class="btn btn-primary">Simpan Tugas</button>
+    </form><div class="mt-5">
+  <h4>Daftar Tugas</h4>
+  <table class="table table-bordered" id="tabelTugas">
+    <thead>
+      <tr>
+        <th>Tanggal</th>
+        <th>Nama</th>
+        <th>Tugas</th>
+        <th>Status</th>
+        <th>Waktu</th>
+        <th>Catatan</th>
+      </tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+</div>
 
-  <div id="status" class="mt-3"></div>
-
-  <script>
-    const form = document.getElementById('salesForm');
-    form.addEventListener('submit', function(e) {
+  </div>  <script>
+    document.getElementById('tugasForm').addEventListener('submit', function(e) {
       e.preventDefault();
-      const barang = document.getElementById('barang').value;
-      const jumlah = document.getElementById('jumlah').value;
+      const tanggal = document.getElementById('tanggal').value;
+      const karyawan = document.getElementById('karyawan').value;
+      const tugas = document.getElementById('tugas').value;
+      const status = document.getElementById('status').value;
+      const mulai = document.getElementById('mulai').value;
+      const selesai = document.getElementById('selesai').value;
+      const catatan = document.getElementById('catatan').value;
 
-      fetch("https://script.google.com/macros/s/YOUR_SCRIPT_ID_HERE/exec", {
-        method: "POST",
-        mode: "no-cors",
-        headers: {
-          "Content-Type": "application/x-www-form-urlencoded"
-        },
-        body: `barang=${barang}&jumlah=${jumlah}`
-      });
+      const tbody = document.querySelector('#tabelTugas tbody');
+      const row = tbody.insertRow();
+      row.innerHTML = `
+        <td>${tanggal}</td>
+        <td>${karyawan}</td>
+        <td>${tugas}</td>
+        <td>${status}</td>
+        <td>${mulai} - ${selesai}</td>
+        <td>${catatan}</td>
+      `;
 
-      document.getElementById('status').innerText = "Terkirim! Data akan diperbarui.";
-      form.reset();
+      document.getElementById('tugasForm').reset();
     });
-  </script>
-</body>
+  </script></body>
 </html>
